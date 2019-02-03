@@ -32,19 +32,27 @@ else:
       GPIO.cleanup()
   print(s2)
   sleep(5)
-  for f in range(20):
+  for f in range(30):
     res = subprocess.call(["ping", "192.168.1.4", "-c1", "-W2", "-q"], stdout=open('devnull', 'w'))
     sleep(1)
     if res is not 1:
-      print(s3)
+      sys.stdout.write(s3)
       sys.stdout.write(str(res))
-      print("")
       sleep(5)
+      print ('')
       sys.exit()
     else:
-      print(s4)
+      sys.stdout.write(s4)
       sys.stdout.write(str(res))
-      print("")
-
-#if res is 0:
-#  print(res, s5)
+      print ('')
+if res is 1:
+  print ('問題があります、長押しますか？')
+  inputWord = raw_input('yで長押し  ')
+  if inputWord is 'y':
+    print ('長押しコマンド発行中')
+    GPIO.output(setIo, GPIO.HIGH)
+    sleep(4)
+    GPIO.output(setIo, GPIO.LOW)
+    GPIO.cleanup()
+  else:
+    print('起動しませんでした')
